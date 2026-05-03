@@ -1,128 +1,152 @@
-# murder-on-the-high-seas
 # 🚢 Murder on the High Seas
 
-A mobile-friendly mystery game — part Clue, part Among Us — built in React.
+A 2D mobile exploration game — part Clue, part Among Us.
+Walk around a Carnival cruise ship, talk to characters, collect clues, and figure out who the murderer is before the ship docks.
 
 ---
 
-## What This Game Is
+## How to Launch in Lovable
 
-You're a passenger on a Carnival-style cruise ship. Someone on board is a murderer.
-You have to figure out who it is **before the ship reaches port** — without getting killed yourself.
+### Step 1
+Go to [lovable.dev](https://lovable.dev) and create a free account. Start a new project.
 
-- Choose your character (male, female, or non-binary) — each has a unique superpower
-- Collect clues each round — some are real, some are fake (the Yorkie-poo will let you know)
-- Survive 5 ships across 5 destinations
-- Beat all 5 ships → unlock the ability to create your own ship, murderer, and player
+### Step 2
+Paste the prompt below as your first message. Then paste the full contents of `gameData.js` right after it.
 
 ---
 
-## How to Get This Running
+## ✂️ LOVABLE PROMPT — Paste This First
 
-### Step 1 — Put the code on GitHub
+```
+Build a mobile-first 2D exploration game called "Murder on the High Seas."
+Use the gameData.js file I'm pasting below for all characters, ships, rooms, clues, and logic.
 
-1. Go to [github.com](https://github.com) and create a free account if you don't have one
-2. Click **New Repository** → name it `murder-on-the-high-seas`
-3. Make it **Public**
-4. Upload `gameData.js` to the repo
+The game works like this:
 
-### Step 2 — Open Lovable
+CORE MECHANIC — WALKING & TALKING:
+- The player walks around a 2D top-down or side-scrolling view of a cruise ship
+- The ship is divided into rooms (Lido Deck, Kitchen, Bar, Cabin Hallway, Deck 4, etc.)
+- Characters (suspects and agents) stand or walk around in their rooms
+- When the player walks up to a character and taps them, a voice bubble appears above the character's head with a clue
+- Real clues show a small shape icon (⭐ ⬤ ■ ⬡ ▲) in the corner of the voice bubble
+- Fake clues trigger the Yorkie-poo animation (a small dog named Biscuit trots in, makes a fart noise, waves both paws twice, trots away — bubble says "Woof. That one was fake.")
+- Player collects 10 clues per ship by walking around and talking to people
+- All real clues are saved in a running journal the player can open anytime
 
-1. Go to [lovable.dev](https://lovable.dev) and sign in
-2. Click **New Project**
-3. Connect your GitHub repo
-4. Paste this prompt into Lovable's chat:
+SCREENS TO BUILD:
+
+1. TITLE SCREEN
+   - Dark ocean at night, cruise ship lit up, dramatic serif font
+   - Buttons: New Game, Continue, Settings
+
+2. CHARACTER SELECT
+   - Choose gender: Male / Female / Non-Binary
+   - Show character cards with name and superpower
+   - Tap to select
+
+3. DIFFICULTY SELECT
+   - Easy / Medium / Hard
+   - Show what each means (more fake clues, higher kill risk)
+
+4. SHIP EXPLORATION (main gameplay screen)
+   - 2D view of the ship with rooms the player can tap to walk into
+   - Characters visible in rooms as 2D sprites
+   - Tap a character → voice bubble appears with their clue
+   - Real clues: shape icon in bubble corner, saved to journal
+   - Fake clues: Yorkie-poo animation plays, clue is marked fake
+   - Each room entry rolls kill risk (based on difficulty)
+   - HUD shows: current ship, destination, clue count, journal button, pause button
+   - Each of the 5 ships looks visually different (tropical, oceanic, European, arctic, bayou themes)
+
+5. JOURNAL SCREEN
+   - Shows all real clues collected so far this ship
+   - Player can review and cross-reference
+
+6. ACCUSATION SCREEN
+   - Player can accuse a suspect at any time
+   - Shows list of suspects with names and roles
+   - Correct = win this ship and move to the next
+   - Wrong = lose a life (or restart ship on hard)
+
+7. KILLED SCREEN
+   - Dramatic but family-friendly "You've been killed!" screen
+   - No gore — think shadow, gasp, blackout
+   - Restart from Ship 1
+
+8. WIN SCREEN (per ship)
+   - Celebration, ship docks, move to next ship
+
+9. FULL WIN SCREEN (beat all 5 ships)
+   - Unlock: Create Your Own Ship, Murderer, and Player
+   - Form to enter name, destination, role, superpower
+   - First 3 players to finish get to create a new level
+   - New ships can be added to one level or all levels
+
+STYLE:
+- 2D but realistic-looking, family-friendly, no gore
+- Carnival cruise ship aesthetic — warm lights, ocean, wood floors, bright colors
+- Each ship has its own color theme and ambient feel
+- Voice bubbles are rounded, expressive, animated in smoothly
+- Yorkie-poo dog is cute and animated
+
+ALWAYS VISIBLE:
+- Pause button (top corner, every screen)
+- Journal button during exploration
+```
 
 ---
 
-**Lovable Prompt (copy and paste this):**
-
-> Build a mobile-first React game called "Murder on the High Seas." Import all game data from `gameData.js` already in the repo. The game should:
->
-> 1. Show a title screen with a Carnival cruise ship aesthetic — dark ocean, warm lights, dramatic font
-> 2. Let the player choose their gender (male / female / non-binary), then pick a character from the list — show their name and superpower
-> 3. Pick a difficulty: Easy, Medium, or Hard
-> 4. Randomly assign a murderer from the SUSPECTS list (hidden from player)
-> 5. Each round, show 10 clues drawn from `buildClueRound()` — real clues show a shape icon in the corner, fake clues trigger a Yorkie-poo animation with a fart sound and the dog wagging both hands twice
-> 6. Player can accuse a suspect at any time using `checkAccusation()`
-> 7. Each round, run `checkKillRisk()` — if triggered, show a dramatic "You've been killed!" screen and restart from Ship 1
-> 8. Include a visible Pause button at all times
-> 9. After completing all 5 ships, unlock a "Create Your Own" screen where the player can build a new ship, murderer, and character
-> 10. 2D art style, realistic but family-friendly, no gore, Carnival cruise ship visual theme — looks different each ship
-
----
-
-### Step 3 — Preview and Test
-
-Lovable will generate the full app. You can preview it live in the browser, then deploy it as a mobile web app directly from Lovable.
-
----
-
-## File Overview
-
-| File | What it does |
-|------|-------------|
-| `gameData.js` | All characters, ships, clues, suspects, logic helpers |
-| `README.md` | This file — setup instructions |
-
----
-
-## Game Rules Summary
+## Game Rules
 
 | Rule | Detail |
 |------|--------|
-| Goal | Identify the murderer before reaching port |
-| Ships | 5 ships, each to a different destination |
-| Clues | 10 per round — mix of real and fake |
-| Real clues | Marked with a shape (⭐ ⬤ ■ ⬡ ▲) in the corner, given by an Agent |
-| Fake clues | Trigger the Yorkie-poo dog animation |
+| Goal | Identify the murderer before the ship docks |
+| How clues work | Walk up to characters, tap them, hear their voice bubble |
+| Real clues | Shape icon (⭐ ⬤ ■ ⬡ ▲) in bubble corner — given by Agents |
+| Fake clues | Yorkie-poo named Biscuit runs in, farts, waves, runs away |
 | Getting killed | Restart from Ship 1 |
+| Ships | 5 ships, each to a different destination |
 | Difficulty | Easy / Medium / Hard — affects fake clue ratio and kill chance |
-| Winning | Complete all 5 ships without being killed |
-| Unlocks | Beat all 5 ships → create new ship, murderer, and player |
-| Top 3 finishers | Can create a new level; ships can be added to one level or all |
+| Winning | Correctly accuse the murderer on all 5 ships |
+| Unlocks | Beat all 5 → create new ship, murderer, player |
 
 ---
 
-## Characters & Superpowers
+## Characters
 
 ### Male
 | Name | Superpower |
 |------|-----------|
-| Octavio | Shadow Step — peek at one hidden clue per round |
-| Victor | Steel Mind — immune to one fake clue per game |
-| Mateo | Street Sense — detect if a suspect is lying once per ship |
-| RJ | Quick Hands — draws an extra clue each round |
-| Enzo | Silver Tongue — ask any suspect one bonus question |
-| Elias | Eagle Eye — fake clues shimmer subtly |
-| Noah | Calm Under Pressure — survives one kill per game |
+| Octavio | Shadow Step — peek into one locked room per ship |
+| Victor | Steel Mind — instantly knows if a voice bubble is fake |
+| Mateo | Street Sense — detects if a suspect is nervous |
+| RJ | Quick Hands — characters come to him |
+| Enzo | Silver Tongue — ask a follow-up question |
+| Elias | Eagle Eye — fake bubbles shimmer |
+| Noah | Calm Under Pressure — survives one kill |
 
 ### Female
 | Name | Superpower |
 |------|-----------|
-| Olivia | Sixth Sense — sense if the murderer is watching |
-| Kelly | Photographic Memory — real clues stay in her log |
-| Addie | Charm — one free clue from a suspect per ship |
-| Anni | Hacker — scan one passenger's background per round |
+| Olivia | Sixth Sense — screen pulses near the murderer |
+| Kelly | Photographic Memory — clues auto-save |
+| Addie | Charm — one free clue per ship |
+| Anni | Hacker — scan any suspect's background |
 
 ### Non-Binary
 | Name | Superpower |
 |------|-----------|
-| Rose | Empath — sense a suspect's emotional state |
-| Spidey | Web Sense — warned one round before a kill attempt |
+| Rose | Empath — nervous characters' bubbles shake |
+| Spidey | Web Sense — warned before a kill attempt |
 
 ---
 
 ## Ships
 
-| # | Ship Name | Destination |
-|---|-----------|------------|
+| # | Ship | Destination |
+|---|------|------------|
 | 1 | Carnival Horizon | Mexico |
 | 2 | Carnival Splendor | Australia |
 | 3 | Carnival Magic | France |
 | 4 | Carnival Spirit | Alaska |
 | 5 | Carnival Valor | New Orleans |
-
----
-
-Built with React · Deployable via Lovable · Data in GitHub
